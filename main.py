@@ -30,8 +30,8 @@ url_base = 'https://9292634-sb1.restlets.api.netsuite.com/app/site/hosting/restl
 # 📋 Diccionario de búsquedas disponibles
 BUSQUEDAS = {
     "clientes": {"script": "2265", "deploy": "1", "searchId": "2931"},
-    "ventas": {"script": "2265", "deploy": "1", "searchId": "2932"},
-    "transacciones": {"script": "2265", "deploy": "1", "searchId": "2933"}
+    "ventas": {"script": "2265", "deploy": "1", "searchId": "2930"},
+    "transacciones": {"script": "2265", "deploy": "1", "searchId": "2923"}
 }
 
 @app.get("/netsuite/data", summary="Consulta búsqueda guardada por tipo", tags=["NetSuite"])
