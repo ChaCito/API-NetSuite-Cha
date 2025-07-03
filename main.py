@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response, HTTPException, Query
+from fastapi import FastAPI, Response, HTTPException, Query, Request
 import os, time, uuid, hmac, hashlib, base64, urllib.parse, requests
 from dotenv import load_dotenv
 import logging
@@ -36,12 +36,19 @@ BUSQUEDAS = {
 
 @app.get("/netsuite/data", summary="Consulta búsqueda guardada por tipo", tags=["NetSuite"])
 async def get_netsuite_data(
+    request: Request,
     tipo: str = Query(..., description="Nombre de la búsqueda guardada (clientes, ventas, transacciones)")
 ):
     """
     Devuelve un CSV a partir de una búsqueda guardada de NetSuite,
-    identificada por un alias (`tipo`).
+    identificada por un alias (`tipo`). También registra IP y agente del consumidor.
     """
+
+    # 🔍 Registrar IP y User-Agent
+    client_ip = request.client.host
+    user_agent = request.headers.get("user-agent", "desconocido")
+    logger.info(f"📥 Petición de tipo='{tipo}' desde IP={client_ip} UA='{user_agent}'")
+
     if tipo not in BUSQUEDAS:
         logger.warning(f"Tipo inválido solicitado: {tipo}")
         raise HTTPException(status_code=404, detail=f"Tipo '{tipo}' no registrado")
@@ -49,7 +56,7 @@ async def get_netsuite_data(
     config = BUSQUEDAS[tipo]
     script, deploy, searchId = config["script"], config["deploy"], config["searchId"]
 
-    logger.info(f"Ejecutando búsqueda tipo='{tipo}' con searchId={searchId}")
+    logger.info(f"🎯 Ejecutando búsqueda tipo='{tipo}' con searchId={searchId}")
 
     # 🔐 OAuth
     nonce = uuid.uuid4().hex
@@ -88,22 +95,23 @@ async def get_netsuite_data(
     headers = {'Authorization': oauth_header, 'Content-Type': 'application/json'}
     full_url = f"{url_base}?script={script}&deploy={deploy}&searchId={searchId}"
 
-    logger.info(f"Llamando a NetSuite: {full_url}")
+    logger.info(f"🌐 Llamando a NetSuite: {full_url}")
     response = requests.get(full_url, headers=headers)
-    logger.info(f"Respuesta NetSuite: {response.status_code}")
+    logger.info(f"📦 Respuesta NetSuite: {response.status_code}")
 
     if response.status_code == 200:
         try:
             data = response.json()
             if "contentBase64" in data:
                 decoded = base64.b64decode(data["contentBase64"]).decode("utf-8")
+                logger.info(f"✅ Búsqueda '{tipo}' entregada correctamente")
                 return Response(content=decoded, media_type="text/csv")
             else:
-                logger.error("Falta 'contentBase64' en respuesta")
+                logger.error("❌ Falta 'contentBase64' en respuesta")
                 raise HTTPException(status_code=400, detail="Respuesta inválida: falta contentBase64")
         except Exception as e:
-            logger.exception("Error procesando la respuesta")
+            logger.exception("❌ Error procesando la respuesta")
             raise HTTPException(status_code=500, detail=str(e))
     else:
-        logger.error(f"Error NetSuite: {response.text}")
+        logger.error(f"❌ Error NetSuite: {response.text}")
         raise HTTPException(status_code=response.status_code, detail=response.text)
