@@ -29,9 +29,9 @@ url_base = 'https://9292634.restlets.api.netsuite.com/app/site/hosting/restlet.n
 
 # 📋 Diccionario de búsquedas disponibles
 BUSQUEDAS = {
-    "clientes": {"script": "6562", "deploy": "1", "searchId": "3575"},
-    "ventas": {"script": "6562", "deploy": "1", "searchId": "3575"},
-    "transacciones": {"script": "6562", "deploy": "1", "searchId": "3575"}
+    "clientes": {"script": "2582", "deploy": "1", "searchId": "3575"},
+    "ventas": {"script": "2582", "deploy": "1", "searchId": "3575"},
+    "transacciones": {"script": "2582", "deploy": "1", "searchId": "3575"}
 }
 
 @app.get("/netsuite/data", summary="Consulta búsqueda guardada por tipo", tags=["NetSuite"])
