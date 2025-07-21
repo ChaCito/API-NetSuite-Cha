@@ -25,13 +25,13 @@ TOKEN_ID = os.getenv("TOKEN_ID")
 TOKEN_SECRET = os.getenv("TOKEN_SECRET")
 
 # 🌐 URL RESTlet base
-url_base = 'https://9292634-sb1.restlets.api.netsuite.com/app/site/hosting/restlet.nl'
+url_base = 'https://9292634.restlets.api.netsuite.com/app/site/hosting/restlet.nl'
 
 # 📋 Diccionario de búsquedas disponibles
 BUSQUEDAS = {
-    "clientes": {"script": "2265", "deploy": "1", "searchId": "2931"},
-    "ventas": {"script": "2265", "deploy": "1", "searchId": "2930"},
-    "transacciones": {"script": "2265", "deploy": "1", "searchId": "2923"}
+    "clientes": {"script": "6562", "deploy": "1", "searchId": "3575"},
+    "ventas": {"script": "6562", "deploy": "1", "searchId": "3575"},
+    "transacciones": {"script": "6562", "deploy": "1", "searchId": "3575"}
 }
 
 @app.get("/netsuite/data", summary="Consulta búsqueda guardada por tipo", tags=["NetSuite"])
