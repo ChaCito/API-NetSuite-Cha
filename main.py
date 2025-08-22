@@ -31,7 +31,8 @@ url_base = 'https://9292634.restlets.api.netsuite.com/app/site/hosting/restlet.n
 BUSQUEDAS = {
     "clientes": {"script": "2582", "deploy": "1", "searchId": "3575"},
     "ventas": {"script": "2582", "deploy": "1", "searchId": "1481"},
-    "transacciones": {"script": "2582", "deploy": "1", "searchId": "4041"}
+    "transacciones": {"script": "2582", "deploy": "1", "searchId": "4041"},
+    "cuentasporpagar" : {"script": "2582", "deploy": "1", "searchId": "3685"}
 }
 
 @app.get("/netsuite/data", summary="Consulta búsqueda guardada por tipo", tags=["NetSuite"])
