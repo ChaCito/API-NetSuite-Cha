@@ -33,6 +33,7 @@ BUSQUEDAS = {
     "ventas": {"script": "2582", "deploy": "1", "searchId": "1481"},
     "transacciones": {"script": "2582", "deploy": "1", "searchId": "4041"},
     "cuentasporpagar" : {"script": "2582", "deploy": "1", "searchId": "3685"}
+    "cobranza" : {"script": "2582", "deploy": "1", "searchId": "2592"}
 }
 
 @app.get("/netsuite/data", summary="Consulta búsqueda guardada por tipo", tags=["NetSuite"])
