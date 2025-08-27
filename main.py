@@ -32,7 +32,7 @@ BUSQUEDAS = {
     "clientes": {"script": "2582", "deploy": "1", "searchId": "3575"},
     "ventas": {"script": "2582", "deploy": "1", "searchId": "1481"},
     "transacciones": {"script": "2582", "deploy": "1", "searchId": "4041"},
-    "cuentasporpagar" : {"script": "2582", "deploy": "1", "searchId": "3685"}
+    "cuentasporpagar" : {"script": "2582", "deploy": "1", "searchId": "3685"},
     "cobranza" : {"script": "2582", "deploy": "1", "searchId": "2592"}
 }
 
